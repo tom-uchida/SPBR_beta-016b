@@ -24,6 +24,13 @@ const char INSTITUTE    [] = "           Ritsumeikan University";
 const char SPBR_WINDOW_TITLE   []   = "SPBR version beta-16b";
 const char OPBR_WINDOW_TITLE   []   = "OPBR version beta-16b";
 
+// UCHIDA 2019/3/30
+//----- Brightness Adjustment
+const char BA_TITLE   [] = "===== Brightness Adjustment =====";
+const char BA_VERSION [] = "Version 1.0";
+const char BA_DATE    [] = "2019/04/01";
+const char BA_AUTHOR  [] = "Tomomasa Uchida";
+
 #endif 
 // end of version.h
 
