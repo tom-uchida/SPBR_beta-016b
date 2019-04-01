@@ -311,11 +311,11 @@ kvs::UInt8 BrightnessAdjustment::searchReferencePixelValue(const kvs::GrayImage&
     } // end while
 
     reference_pixel_value_LR1++;
-    std::cout   << "** Reference pixel value (LR=1)      : " 
-                << +reference_pixel_value_LR1 << " (pixel value)" << std::endl;
-    std::cout   << "** Ratio of reference section (LR=1) : " 
-                << std::setprecision(3) << tmp_ratio*100 << "(%) ( " 
-                << +reference_pixel_value_LR1 << " ~ " << +max_pixel_value_LR1 << " (pixel value) )" << std::endl;
+    // std::cout   << "** Reference pixel value (LR=1)      : " 
+    //             << +reference_pixel_value_LR1 << " (pixel value)" << std::endl;
+    // std::cout   << "** Ratio of reference section (LR=1) : " 
+    //             << std::setprecision(3) << tmp_ratio*100 << "(%) ( " 
+    //             << +reference_pixel_value_LR1 << " ~ " << +max_pixel_value_LR1 << " (pixel value) )" << std::endl;
 
     return reference_pixel_value_LR1;
 } // End searchReferencePixelValue()
