@@ -289,7 +289,7 @@ kvs::UInt8 BrightnessAdjustment::calcMaxPixelValue( const kvs::GrayImage& gray_i
     return max_pixel_value;
 } // End calcMaxPixelValue()
 
-kvs::UInt8 BrightnessAdjustment::searchReferencePixelValue(const kvs::GrayImage& gray_image, const size_t N_all_non_bgcolor, const kvs::UInt8 max_pixel_value_LR1)
+kvs::UInt8 BrightnessAdjustment::searchReferencePixelValue(const kvs::GrayImage& gray_image, const size_t N_all_non_bgcolor_LR1, const kvs::UInt8 max_pixel_value_LR1)
 {
     kvs::UInt8 reference_pixel_value_LR1    = max_pixel_value_LR1;
     float tmp_ratio                         = 0.0f;
@@ -304,7 +304,7 @@ kvs::UInt8 BrightnessAdjustment::searchReferencePixelValue(const kvs::GrayImage&
             }
         }
 
-        tmp_ratio = float(counter) / float(N_all_non_bgcolor);
+        tmp_ratio = float(counter) / float(N_all_non_bgcolor_LR1);
         
         // Next pixel value
         reference_pixel_value_LR1--;
