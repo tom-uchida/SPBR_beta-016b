@@ -10,5 +10,6 @@ LU_AD_PYTHON/
 *.cc
 *.txt
 spbr
+spbr_ex
 opbr
 Makefile*
