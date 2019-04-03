@@ -311,11 +311,11 @@ kvs::UInt8 BrightnessAdjustment::searchReferencePixelValue(const kvs::GrayImage&
     } // end while
 
     reference_pixel_value_LR1++;
-    // std::cout   << "** Reference pixel value (LR=1)      : " 
-    //             << +reference_pixel_value_LR1 << " (pixel value)" << std::endl;
-    // std::cout   << "** Ratio of reference section (LR=1) : " 
-    //             << std::setprecision(3) << tmp_ratio*100 << "(%) ( " 
-    //             << +reference_pixel_value_LR1 << " ~ " << +max_pixel_value_LR1 << " (pixel value) )" << std::endl;
+    std::cout   << "** Reference pixel value (LR=1)      : " 
+                << +reference_pixel_value_LR1 << " (pixel value)" << std::endl;
+    std::cout   << "** Ratio of reference section (LR=1) : " 
+                << std::setprecision(3) << tmp_ratio*100 << "(%) ( " 
+                << +reference_pixel_value_LR1 << " ~ " << +max_pixel_value_LR1 << " (pixel value) )" << std::endl;
 
     return reference_pixel_value_LR1;
 } // End searchReferencePixelValue()
@@ -356,10 +356,10 @@ inline float BrightnessAdjustment::tempolarilyAdjustBrightness( const kvs::Color
                 counter++;
 
     float tmp_ratio = float(counter) / float(N_all_non_bgcolor);
-    std::cout   << "           ( parameter, ratio ) : ( " 
-                << std::setprecision(3) << p << ", " 
-                << std::setprecision(2) << 100*tmp_ratio << "(%) )" 
-                << std::endl;
+    // std::cout   << "           ( parameter, ratio ) : ( " 
+    //             << std::setprecision(3) << p << ", " 
+    //             << std::setprecision(2) << 100*tmp_ratio << "(%) )" 
+    //             << std::endl;
 
     return tmp_ratio;
 } // End tempolarilyAdjustBrightness()
