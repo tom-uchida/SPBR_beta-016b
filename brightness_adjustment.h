@@ -42,9 +42,9 @@ private:
     void        displayMessage();
     int         calcNumOfPixelsNonBGColor( const kvs::ColorImage& image );
     kvs::UInt8  calcMaxPixelValue( const kvs::GrayImage& image );
-    kvs::UInt8  searchReferencePixelValue( const kvs::GrayImage& gray_image, const size_t N_all_non_bgcolor_LR1, const kvs::UInt8 max_pixel_value_LR1 );
-    float       calcAdjustmentParameter( const kvs::ColorImage& color_image, const kvs::UInt8 reference_pixel_value_LR1, const size_t N_all_non_bgcolor );
-    float       tempolarilyAdjustBrightness( const kvs::ColorImage& color_image, const float p, const kvs::UInt8 reference_pixel_value_LR1, const size_t N_all_non_bgcolor );
+    kvs::UInt8  searchThresholdPixelValue( const kvs::GrayImage& gray_image, const size_t N_all_non_bgcolor_LR1, const kvs::UInt8 max_pixel_value_LR1 );
+    float       calcAdjustmentParameter( const kvs::ColorImage& color_image, const kvs::UInt8 threshold_pixel_value_LR1, const size_t N_all_non_bgcolor );
+    float       tempolarilyAdjustBrightness( const kvs::ColorImage& color_image, const float p, const kvs::UInt8 threshold_pixel_value_LR1, const size_t N_all_non_bgcolor );
     kvs::ColorImage deepCopyColorImage( const kvs::ColorImage& other );
     float       specifyNumOfDigits( const float p, const float digits );
     void        doBrightnessAdjustment( kvs::ColorImage& color_image, const float p );

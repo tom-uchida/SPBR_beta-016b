@@ -220,15 +220,15 @@ void BrightnessAdjustment::adjustBrightness( const std::string filename )
     std::cout << "** Max pixel value (LR=1)            : " << +max_pixel_value_LR1 << " (pixel value)" << std::endl;
 
     // =================================================
-    //  STEP2 : Search for reference pixel value (LR=1) 
+    //  STEP2 : Search for threshold pixel value (LR=1) 
     // =================================================
     size_t N_all_non_bgcolor_LR1 = calcNumOfPixelsNonBGColor( m_img_Color_LR1 );
-    kvs::UInt8 reference_pixel_value_LR1 = searchReferencePixelValue( img_Gray_LR1, N_all_non_bgcolor_LR1, max_pixel_value_LR1 );
+    kvs::UInt8 threshold_pixel_value_LR1 = searchThresholdPixelValue( img_Gray_LR1, N_all_non_bgcolor_LR1, max_pixel_value_LR1 );
 
     // =======================================
     //  STEP3 : Adjust brightness of an image
     // =======================================
-    float p = calcAdjustmentParameter( m_img_Color, reference_pixel_value_LR1, N_all_non_bgcolor );
+    float p = calcAdjustmentParameter( m_img_Color, threshold_pixel_value_LR1, N_all_non_bgcolor );
     p = specifyNumOfDigits( p, 4 );
     doBrightnessAdjustment( m_img_Color, p );
     std::cout << "** Adjustment parameter              : " << std::setprecision(3) << p << std::endl;
@@ -289,17 +289,17 @@ kvs::UInt8 BrightnessAdjustment::calcMaxPixelValue( const kvs::GrayImage& gray_i
     return max_pixel_value;
 } // End calcMaxPixelValue()
 
-kvs::UInt8 BrightnessAdjustment::searchReferencePixelValue(const kvs::GrayImage& gray_image, const size_t N_all_non_bgcolor_LR1, const kvs::UInt8 max_pixel_value_LR1)
+kvs::UInt8 BrightnessAdjustment::searchThresholdPixelValue(const kvs::GrayImage& gray_image, const size_t N_all_non_bgcolor_LR1, const kvs::UInt8 max_pixel_value_LR1)
 {
-    kvs::UInt8 reference_pixel_value_LR1    = max_pixel_value_LR1;
+    kvs::UInt8 threshold_pixel_value_LR1    = max_pixel_value_LR1;
     float tmp_ratio                         = 0.0f;
 
-    // Search for reference pixel value
+    // Search for threshold pixel value
     while ( tmp_ratio < m_ratio_of_reference_section ) {
         int counter = 0;
         for ( size_t j = 0; j < gray_image.height(); j++ ) {
             for ( size_t i = 0; i < gray_image.width(); i++ ) {
-                if ( gray_image.pixel( i, j ) >= reference_pixel_value_LR1 ) 
+                if ( gray_image.pixel( i, j ) >= threshold_pixel_value_LR1 ) 
                     counter++;
             }
         }
@@ -307,20 +307,20 @@ kvs::UInt8 BrightnessAdjustment::searchReferencePixelValue(const kvs::GrayImage&
         tmp_ratio = float(counter) / float(N_all_non_bgcolor_LR1);
         
         // Next pixel value
-        reference_pixel_value_LR1--;
+        threshold_pixel_value_LR1--;
     } // end while
 
-    reference_pixel_value_LR1++;
-    std::cout   << "** Reference pixel value (LR=1)      : " 
-                << +reference_pixel_value_LR1 << " (pixel value)" << std::endl;
-    std::cout   << "** Ratio of reference section (LR=1) : " 
+    threshold_pixel_value_LR1++;
+    std::cout   << "** Threshold pixel value (LR=1)      : " 
+                << +threshold_pixel_value_LR1 << " (pixel value)" << std::endl;
+    std::cout   << "** Ratio of threshold section (LR=1) : " 
                 << std::setprecision(3) << tmp_ratio*100 << "(%) ( " 
-                << +reference_pixel_value_LR1 << " ~ " << +max_pixel_value_LR1 << " (pixel value) )" << std::endl;
+                << +threshold_pixel_value_LR1 << " ~ " << +max_pixel_value_LR1 << " (pixel value) )" << std::endl;
 
-    return reference_pixel_value_LR1;
-} // End searchReferencePixelValue()
+    return threshold_pixel_value_LR1;
+} // End searchThresholdPixelValue()
 
-float BrightnessAdjustment::calcAdjustmentParameter( const kvs::ColorImage& color_image, const kvs::UInt8 reference_pixel_value_LR1, const size_t N_all_non_bgcolor )
+float BrightnessAdjustment::calcAdjustmentParameter( const kvs::ColorImage& color_image, const kvs::UInt8 threshold_pixel_value_LR1, const size_t N_all_non_bgcolor )
 {
     float adjustment_parameter              = 1.0f;
     float tmp_ratio_of_reference_section    = 0.0f;
@@ -333,7 +333,7 @@ float BrightnessAdjustment::calcAdjustmentParameter( const kvs::ColorImage& colo
         tmp_ratio_of_reference_section = tempolarilyAdjustBrightness(
             /* kvs::ColorImage  */ color_image, 
             /* const float      */ adjustment_parameter, 
-            /* const kvs::UInt8 */ reference_pixel_value_LR1, 
+            /* const kvs::UInt8 */ threshold_pixel_value_LR1, 
             /* const size_t     */ N_all_non_bgcolor );
     } // end while
 
@@ -341,7 +341,7 @@ float BrightnessAdjustment::calcAdjustmentParameter( const kvs::ColorImage& colo
     return adjustment_parameter;
 } // End doBrightnessAdjustment()
 
-inline float BrightnessAdjustment::tempolarilyAdjustBrightness( const kvs::ColorImage& color_image, const float p, const kvs::UInt8 reference_pixel_value_LR1, const size_t N_all_non_bgcolor )
+inline float BrightnessAdjustment::tempolarilyAdjustBrightness( const kvs::ColorImage& color_image, const float p, const kvs::UInt8 threshold_pixel_value_LR1, const size_t N_all_non_bgcolor )
 {
     kvs::ColorImage tmp_color_image = deepCopyColorImage( color_image );
     doBrightnessAdjustment( tmp_color_image, p );
@@ -352,7 +352,7 @@ inline float BrightnessAdjustment::tempolarilyAdjustBrightness( const kvs::Color
     int counter = 0;
     for ( size_t j = 0; j < tmp_gray_image.height(); j++ )
         for ( size_t i = 0; i < tmp_gray_image.width(); i++ )
-            if ( tmp_gray_image.pixel( i, j ) >= reference_pixel_value_LR1 ) 
+            if ( tmp_gray_image.pixel( i, j ) >= threshold_pixel_value_LR1 ) 
                 counter++;
 
     float tmp_ratio = float(counter) / float(N_all_non_bgcolor);
