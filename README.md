@@ -2,7 +2,7 @@
 
 ## Overview
 - An extended version of SPBR
-- Implemented "brightness adjustment" function
+- Implemented "#/BrightnessAdjustment" command
 
 ## Command
 ```
@@ -13,7 +13,9 @@
 ```bash
 $ spbr_ex input.spbr
 ```
+
 or
+
 ```bash
 $ spbr_ex input.ply
 ```
