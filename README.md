@@ -4,7 +4,11 @@
 - An extended version of SPBR
 - Implemented "#/BrightnessAdjustment" command
 
-## Command
+## Prerequisites
+- KVS: 2.7.0
+- SPBR: beta_016b
+
+## New Command
 ```
 #/BrightnessAdjustment 1 or 0 (default: 0)
 ```
